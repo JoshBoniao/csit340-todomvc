@@ -1,4 +1,9 @@
+import {  useState } from "react";
 function Todos() {
+  const [todos] = useState([
+    { id: 1, text: "Learn the spread operator", completed: false },
+    { id: 2, text: "Set up Tailwind", completed: true },
+  ]);
   return (
     <section className="mx-auto max-w-[550px]">
       <h1 className="text-center text-[80px] font-extralight text-[#b83f45]">
@@ -12,8 +17,7 @@ function Todos() {
             placeholder="What needs to be done?"
           />
         </form>
-        
- 
+
         <main className="relative border-t border-[#e6e6e6]">
           <input id="toggle-all" type="checkbox" className="peer sr-only" />
           <label
@@ -22,44 +26,39 @@ function Todos() {
           >
             <span className="rotate-90">❯</span>
           </label>
-          
- 
+
           <ul>
-            <li className="group relative flex items-center border-b border-[#ededed] text-2xl">
-              <input
-                type="checkbox"
-                className="ml-[15px] size-[30px] shrink-0 cursor-pointer accent-[#59a193]"
-              />
-              <span className="flex-1 py-[15px] pr-[60px] pl-[15px] break-all">
-                Learn the spread operator
-              </span>
-              <button
-                type="button"
-                className="absolute right-[10px] hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
+            {todos.map((todo) => (
+              <li
+                key={todo.id}
+                className="group relative flex items-center border-b border-[#ededed] text-2xl"
               >
-                ×
-              </button>
-            </li>
-            <li className="group relative flex items-center border-b border-[#ededed] text-2xl">
-              <input
-                type="checkbox"
-                checked
-                readOnly
-                className="ml-[15px] size-[30px] shrink-0 cursor-pointer accent-[#59a193]"
-              />
-              <span className="flex-1 py-[15px] pr-[60px] pl-[15px] break-all text-[#949494] line-through">
-                Set up Tailwind
-              </span>
-              <button
-                type="button"
-                className="absolute right-[10px] hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
-              >
-                ×
-              </button>
-            </li>
+                <input
+                  type="checkbox"
+                  checked={todo.completed}
+                  readOnly
+                  className="ml-[15px] size-[30px] shrink-0 cursor-pointer accent-[#59a193]"
+                />
+                <span
+                  className={
+                    todo.completed
+                      ? "flex-1 py-[15px] pr-[60px] pl-[15px] break-all text-[#949494] line-through"
+                      : "flex-1 py-[15px] pr-[60px] pl-[15px] break-all"
+                  }
+                >
+                  {todo.text}
+                </span>
+                <button
+                  type="button"
+                  className="absolute right-[10px] hidden size-10 cursor-pointer text-[30px] text-[#949494] group-hover:block hover:text-[#c18585]"
+                >
+                  ×
+                </button>
+              </li>
+            ))}
           </ul>
         </main>
- 
+
         <footer className="grid h-10 grid-cols-3 items-center border-t border-[#e6e6e6] px-[15px] text-[15px]">
           <span>
             <strong className="font-light">1</strong> item left
@@ -90,7 +89,10 @@ function Todos() {
               </button>
             </li>
           </ul>
-          <button type="button" className="cursor-pointer justify-self-end hover:underline">
+          <button
+            type="button"
+            className="cursor-pointer justify-self-end hover:underline"
+          >
             Clear completed
           </button>
         </footer>
